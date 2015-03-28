@@ -13,7 +13,14 @@ class Image {
 	protected $_lastY;
 	protected $_lastColor;
 	protected $_img;
+	protected $_processed;
 
+
+	public function __construct()
+	{
+		$this->_img = array();
+		$this->_processed = array();
+	}
 
 	public function createCanvas($x, $y)
 	{
@@ -64,42 +71,22 @@ class Image {
 			return $this;
 		}
 
-		// $this->_checkAdjacentCell($x, $y, $color);
+		$this->_spread($x, $y, $color);
+	}
 
-		// go up the x-axis
-		for ($rt = $x; $rt <= $this->_currentX; $rt++) {
-			for ($up = $y; $up <= $this->_currentY; $up++) {
-				if($this->getCellColor($rt, $up) == $this->_lastColor) {
-					$this->fillCell($rt, $up, $color);
-				}else{
-				//	break;
-				}
-			}
+	protected function _spread($x, $y, $color)
+	{
+		$this->fillCell($x, $y, $color);
+		array_push($this->_processed, array($x, $y));
 
-			for ($down = $y - 1; $down >= self::MIN_Y; $down--) {
-				if($this->getCellColor($rt, $down) == $this->_lastColor) {
-					$this->fillCell($rt, $down, $color);
-				}else{
-				//	break;
-				}
-			}
-		}
-
-		// go down the x-axis
-		for ($lt = $x - 1; $lt >= self::MIN_X; $lt--) {
-			for ($up = $y; $up <= $this->_currentY; $up++) {
-				if($this->getCellColor($lt, $up) == $this->_lastColor) {
-					$this->fillCell($lt, $up, $color);
-				}else{
-				//	break;
-				}
-			}
-
-			for ($down = $y - 1; $down >= self::MIN_Y; $down--) {
-				if($this->getCellColor($lt, $down) == $this->_lastColor) {
-					$this->fillCell($lt, $down, $color);
-				}else{
-				//	break;
+		for($i = $x - 1; $i <= $x + 1; $i++){
+			if($i >= self::MIN_X && $i <= $this->_currentX) {
+				for($j = $y - 1; $j <= $y + 1; $j++) {
+					if( !in_array(array($i, $j), $this->_processed) && 
+						$j >= self::MIN_Y && $j <= $this->_currentY &&
+						$this->getCellColor($i, $j) == $this->_lastColor) {
+						$this->_spread($i, $j, $color);
+					}
 				}
 			}
 		}
