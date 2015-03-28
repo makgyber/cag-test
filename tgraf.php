@@ -1,9 +1,7 @@
 <?php
+namespace tgraf\lib;
 
-$fp = fopen('php://stdin', 'r');
-$in = '';
-while($in != 'X'){
-    echo 'tgraf>';
-    $in =  trim(fgets($fp));
-}
-echo "Bye!";
+require_once('lib/Editor.php');
+
+$editor = new Editor();
+$editor->run();

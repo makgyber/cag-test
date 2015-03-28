@@ -11,6 +11,7 @@ class Image {
 	protected $_currentY;
 	protected $_lastX;
 	protected $_lastY;
+	protected $_lastColor;
 	protected $_img;
 
 
@@ -53,9 +54,66 @@ class Image {
 		}
 	}
 
-	public function fillArea()
+	public function fillArea($x, $y, $color)
 	{
+		// get the original color of selected cell
+		$this->_lastColor = $this->getCellColor($x, $y);
 
+		if ($this->_lastColor === $color) {
+			//do nothing
+			return $this;
+		}
+
+		// $this->_checkAdjacentCell($x, $y, $color);
+
+		// go up the x-axis
+		for ($rt = $x; $rt <= $this->_currentX; $rt++) {
+			for ($up = $y; $up <= $this->_currentY; $up++) {
+				if($this->getCellColor($rt, $up) == $this->_lastColor) {
+					$this->fillCell($rt, $up, $color);
+				}else{
+				//	break;
+				}
+			}
+
+			for ($down = $y - 1; $down >= self::MIN_Y; $down--) {
+				if($this->getCellColor($rt, $down) == $this->_lastColor) {
+					$this->fillCell($rt, $down, $color);
+				}else{
+				//	break;
+				}
+			}
+		}
+
+		// go down the x-axis
+		for ($lt = $x - 1; $lt >= self::MIN_X; $lt--) {
+			for ($up = $y; $up <= $this->_currentY; $up++) {
+				if($this->getCellColor($lt, $up) == $this->_lastColor) {
+					$this->fillCell($lt, $up, $color);
+				}else{
+				//	break;
+				}
+			}
+
+			for ($down = $y - 1; $down >= self::MIN_Y; $down--) {
+				if($this->getCellColor($lt, $down) == $this->_lastColor) {
+					$this->fillCell($lt, $down, $color);
+				}else{
+				//	break;
+				}
+			}
+		}
+	}
+
+	public function renderCanvas()
+	{
+		echo "\n";
+		for($j=1; $j <= $this->_currentY; $j++) {
+			for ($i=1; $i <= $this->_currentX; $i++) {
+				echo $this->getCellColor($i, $j);
+			}
+			echo "\n";
+		}
 	}
 
 	public function reset()
