@@ -18,7 +18,7 @@ class EditorTest extends \PHPUnit_Framework_TestCase
     	$this->assertTrue($this->_ed instanceof Editor);
     }
 
-    public function testCreateImage()
+    public function testI()
     {
     	$this->_ed->processCommand('I 2 2');
     	$img = $this->_ed->getImg();
@@ -26,4 +26,17 @@ class EditorTest extends \PHPUnit_Framework_TestCase
     	$this->assertEquals($img->getCellColor(2, 2), 'O');
     }
 
+    public function testC()
+    {
+    	$this->_ed->processCommand('I 2 2');
+    
+    }
+
+    public function testL()
+    {
+    	$this->_ed->processCommand('I 10 10');
+    	$this->assertEquals($this->_ed->getImg()->getCellColor(2, 2), 'O');
+    	$this->_ed->processCommand('L 2 2 G');
+    	$this->assertEquals($this->_ed->getImg()->getCellColor(2, 2), 'G');
+    }
 }

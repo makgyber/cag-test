@@ -23,18 +23,52 @@ class Editor {
 		echo $this->_img->renderCanvas();
 	}
 
+	/**
+	* clear the table (return default color 'O')
+	*/
 	public function C(array $params)
 	{
 		$this->_img->clearCanvas();
+	}
+
+	/**
+	* Color a pixel (H x1 y2 y c)
+	*/
+	public function L(array $params)
+	{
+		$this->_img->fillCell($params[1], $params[2], $params[3]);
+	}
+
+	/**
+	* Horizontal Line (H x1 y2 y c)
+	*/
+	public function H(array $params)
+	{
+		$this->_img->fillHLine($params[1], $params[2], $params[3], $params[4]);
+	}
+
+	/**
+	* Vertical Line (V x y1 y2 c)
+	*/
+	public function V(array $params)
+	{
+		$this->_img->fillVLine($params[1], $params[2], $params[3], $params[4]);
+	}
+
+	/**
+	* Fill Area (F x y c)
+	*/
+	public function F(array $params)
+	{
+		$this->_img->fillCell($params[1], $params[2], $params[3]);
 	}
 
 	public function processCommand($input)
 	{
 		$cmd = explode(' ', $input);
 	    if (method_exists($this, $cmd[0])) {
-			$result = call_user_func(array($this, $cmd[0]), $cmd);
+			call_user_func(array($this, $cmd[0]), $cmd);
 		}
-		return $result;
 	}
 
 	public function run() 
