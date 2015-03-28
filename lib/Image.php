@@ -90,6 +90,8 @@ class Image {
 				}
 			}
 		}
+		unset($this->_processed);
+		$this->_processed = array();
 	}	
 
 	public function renderCanvas()

@@ -99,6 +99,11 @@ class Editor {
 		}
 	}
 
+	public function X(array $params)
+	{
+		return "Exiting...\n";
+	}
+
 	public function processCommand($input)
 	{
 		$result = '';
