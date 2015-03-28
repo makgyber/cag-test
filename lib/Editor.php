@@ -14,7 +14,12 @@ class Editor {
 	// create image
 	public function I(array $params)
 	{	
-		$this->_img->createCanvas($params[1], $params[2]);
+		if(count($params) == 3){
+			$this->_img->createCanvas($params[1], $params[2]);
+		}else{
+			return "Please check your syntax and parameter count. eg. `I X Y`\n";
+		}
+		
 	}
 
 	// show image
@@ -32,11 +37,16 @@ class Editor {
 	}
 
 	/**
-	* Color a pixel (H x1 y2 y c)
+	* Color a pixel (L x y c)
 	*/
 	public function L(array $params)
 	{
-		$this->_img->fillCell($params[1], $params[2], $params[3]);
+		if(count($params) == 4){
+			$this->_img->fillCell($params[1], $params[2], $params[3]);
+		}else{
+			return "Please check your syntax and parameter count. eg. `L X Y C`\n";
+		}
+		
 	}
 
 	/**
@@ -44,7 +54,11 @@ class Editor {
 	*/
 	public function H(array $params)
 	{
-		$this->_img->fillHLine($params[1], $params[2], $params[3], $params[4]);
+		if( count($params) == 5) {
+			$this->_img->fillHLine($params[1], $params[2], $params[3], $params[4]);
+		} else {
+			return "Please check your syntax and parameter count. eg. `H X Y1 Y2 C`\n";
+		}
 	}
 
 	/**
@@ -52,7 +66,11 @@ class Editor {
 	*/
 	public function V(array $params)
 	{
-		$this->_img->fillVLine($params[1], $params[2], $params[3], $params[4]);
+		if( count($params) == 5) {
+			$this->_img->fillVLine($params[1], $params[2], $params[3], $params[4]);
+		} else {
+			return "Please check your syntax and parameter count. eg. `V X Y1 Y2 C`\n";
+		}
 	}
 
 	/**
@@ -60,27 +78,36 @@ class Editor {
 	*/
 	public function F(array $params)
 	{
-		$this->_img->fillCell($params[1], $params[2], $params[3]);
+		if(count($params) == 4){
+			$this->_img->fillArea($params[1], $params[2], $params[3]);
+		}else{
+			return "Please check your syntax and parameter count. eg. `F X Y C`\n";
+		}
 	}
 
 	public function processCommand($input)
 	{
+		$result = '';
 		$cmd = explode(' ', $input);
 	    if (method_exists($this, $cmd[0])) {
-			call_user_func(array($this, $cmd[0]), $cmd);
+			$result = call_user_func(array($this, $cmd[0]), $cmd);
+		} else {
+			$result = "Please make sure all command-input letters are valid and CAPITALIZED\n";
 		}
+		return $result;
 	}
 
 	public function run() 
 	{
 		$fp = fopen('php://stdin', 'r');
 		$in = '';
+		clrscr();
 		while ($in != 'X'){
 		    echo 'tgraf> ';
-		    $in =  strtoupper(trim(fgets($fp)));
-		    $this->processCommand($in);
+		    $in =  trim(fgets($fp));
+		    echo $this->processCommand($in);
 		}
-		echo "Bye!";
+		echo "Bye!\n";
 	}
 
 	public function getImg()
