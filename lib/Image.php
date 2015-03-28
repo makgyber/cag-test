@@ -39,16 +39,18 @@ class Image {
 		}
 	}
 
-	
-
-	public function fillVLine($x1, $x2, $y, $color)
+	public function fillHLine($x1, $x2, $y, $color)
 	{
-
+		for ($i = $x1; $i <= $x2; $i++) {
+			$this->fillCell($i, $y, $color);
+		}
 	}
 
-	public function fillHLine()
+	public function fillVLine($x, $y1, $y2, $color)
 	{
-
+		for ($j = $y1; $j <= $y2; $j++) {
+			$this->fillCell($x, $j, $color);
+		}
 	}
 
 	public function fillArea()
@@ -79,5 +81,10 @@ class Image {
 	public function getImg()
 	{
 		return $this->_img;
+	}
+
+	public function getCellColor($x, $y)
+	{
+		return $this->_img[$x][$y];
 	}
 }

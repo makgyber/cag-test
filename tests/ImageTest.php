@@ -58,6 +58,24 @@ class ImageTest extends \PHPUnit_Framework_TestCase
     	);
     }
 
+    public function testFillHLine()
+    {
+    	$this->img->createCanvas(10, 10);
+    	$this->img->fillHLine(5, 9, 3, 'R');
+    	$this->assertEquals($this->img->getCellColor(4, 3), 'O');
+    	$this->assertEquals($this->img->getCellColor(5, 3), 'R');
+    	$this->assertEquals($this->img->getCellColor(9, 3), 'R');
+    	$this->assertEquals($this->img->getCellColor(9, 4), 'O');
+    }
 
+    public function testFillVLine()
+    {
+    	$this->img->createCanvas(10, 10);
+    	$this->img->fillVLine(5, 2, 6, 'R');
+    	$this->assertEquals($this->img->getCellColor(4, 3), 'O');
+    	$this->assertEquals($this->img->getCellColor(5, 3), 'R');
+    	$this->assertEquals($this->img->getCellColor(5, 6), 'R');
+    	$this->assertEquals($this->img->getCellColor(6, 7), 'O');
+    }
     
 }
