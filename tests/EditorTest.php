@@ -17,4 +17,12 @@ class EditorTest extends \PHPUnit_Framework_TestCase
     {
     	$this->assertTrue($this->_ed instanceof Editor);
     }
+
+    public function testCreateImage()
+    {
+    	$this->_ed->processCommand('I 2 2');
+    	$img = $this->_ed->getImg();
+    	$this->assertTrue($img instanceof Image);
+    	$this->assertEquals($img->getCellColor(2, 2), 'O');
+    }
 }

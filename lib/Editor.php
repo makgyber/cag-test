@@ -23,17 +23,29 @@ class Editor {
 		echo $this->_img->renderCanvas();
 	}
 
-	public function run() {
+	public function processCommand($input)
+	{
+		$cmd = explode(' ', $input);
+	    if (method_exists($this, $cmd[0])) {
+			call_user_func(array($this, $cmd[0]), $cmd);
+		}
+	}
+
+	public function run() 
+	{
 		$fp = fopen('php://stdin', 'r');
 		$in = '';
 		while ($in != 'X'){
 		    echo 'tgraf> ';
 		    $in =  strtoupper(trim(fgets($fp)));
-		    $cmd = explode(' ', $in);
-		    if (method_exists($this, $cmd[0])) {
-				call_user_func(array($this, $cmd[0]), $cmd);
-			}
+		    $this->processCommand($in);
 		}
 		echo "Bye!";
 	}
+
+	public function getImg()
+	{
+		return $this->_img;
+	}
+
 }
