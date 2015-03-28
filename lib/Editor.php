@@ -55,7 +55,14 @@ class Editor {
 	public function H(array $params)
 	{
 		if( count($params) == 5) {
-			$this->_img->fillHLine($params[1], $params[2], $params[3], $params[4]);
+			if($params[1] > $params[2]){
+				$x1 = $params[2];
+				$x2 = $params[1];
+			}else{
+				$x1 = $params[1];
+				$x2 = $params[2];
+			}			
+			$this->_img->fillHLine($x1, $x2, $params[3], $params[4]);
 		} else {
 			return "Please check your syntax and parameter count. eg. `H X Y1 Y2 C`\n";
 		}
@@ -67,7 +74,14 @@ class Editor {
 	public function V(array $params)
 	{
 		if( count($params) == 5) {
-			$this->_img->fillVLine($params[1], $params[2], $params[3], $params[4]);
+			if($params[2] > $params[3]){
+				$y1 = $params[3];
+				$y2 = $params[2];
+			}else{
+				$y1 = $params[2];
+				$y2 = $params[3];
+			}
+			$this->_img->fillVLine($params[1], $y1, $y2, $params[4]);
 		} else {
 			return "Please check your syntax and parameter count. eg. `V X Y1 Y2 C`\n";
 		}
@@ -101,7 +115,7 @@ class Editor {
 	{
 		$fp = fopen('php://stdin', 'r');
 		$in = '';
-		clrscr();
+		echo "\f";
 		while ($in != 'X'){
 		    echo 'tgraf> ';
 		    $in =  trim(fgets($fp));
