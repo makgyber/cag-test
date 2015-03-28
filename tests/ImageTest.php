@@ -80,9 +80,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
     public function testFillArea()
     {
     	$this->img->createCanvas(10, 10);
-    	$this->img->renderCanvas();
     	$this->img->fillArea(5, 5, 'R');
-    	$this->img->renderCanvas();
     	$this->assertEquals($this->img->getCellColor(1, 1), 'R');
     	$this->assertEquals($this->img->getCellColor(5, 5), 'R');
     	$this->assertEquals($this->img->getCellColor(10, 10), 'R');
@@ -99,5 +97,17 @@ class ImageTest extends \PHPUnit_Framework_TestCase
     	$this->img->renderCanvas();
     	$this->img->fillArea(5, 5, 'R');
     	$this->img->renderCanvas();
+    }
+
+    public function testClearCanvas()
+    {
+    	$this->img->createCanvas(10, 10);
+    	$this->img->fillHLine(2, 8, 2, 'G');
+    	$this->img->fillVLine(3, 3, 9, 'B');
+    	$this->assertEquals($this->img->getCellColor(2, 2), 'G');
+    	$this->assertEquals($this->img->getCellColor(3, 9), 'B');
+    	$this->img->clearCanvas();
+    	$this->assertEquals($this->img->getCellColor(2, 2), 'O');
+    	$this->assertEquals($this->img->getCellColor(3, 9), 'O');
     }
 }

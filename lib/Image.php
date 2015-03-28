@@ -103,7 +103,7 @@ class Image {
 				}
 			}
 		}
-	}
+	}	
 
 	public function renderCanvas()
 	{
@@ -116,9 +116,13 @@ class Image {
 		}
 	}
 
-	public function reset()
+	public function clearCanvas()
 	{
-		unset($this->_img);
+		for($j=1; $j <= $this->_currentY; $j++) {
+			for ($i=1; $i <= $this->_currentX; $i++) {
+				$this->fillCell($i, $j, self::DEFAULT_COLOR);
+			}
+		}
 		return $this;
 	}
 

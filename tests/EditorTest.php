@@ -25,4 +25,5 @@ class EditorTest extends \PHPUnit_Framework_TestCase
     	$this->assertTrue($img instanceof Image);
     	$this->assertEquals($img->getCellColor(2, 2), 'O');
     }
+
 }

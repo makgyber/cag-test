@@ -23,12 +23,18 @@ class Editor {
 		echo $this->_img->renderCanvas();
 	}
 
+	public function C(array $params)
+	{
+		$this->_img->clearCanvas();
+	}
+
 	public function processCommand($input)
 	{
 		$cmd = explode(' ', $input);
 	    if (method_exists($this, $cmd[0])) {
-			call_user_func(array($this, $cmd[0]), $cmd);
+			$result = call_user_func(array($this, $cmd[0]), $cmd);
 		}
+		return $result;
 	}
 
 	public function run() 
