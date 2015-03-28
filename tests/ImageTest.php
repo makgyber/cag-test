@@ -15,18 +15,18 @@ class ImageTest extends \PHPUnit_Framework_TestCase
     public function testNewImage()
     {
     	$this->assertTrue($this->img instanceOf Image);
-    	$this->assertEquals(-1, $this->img->createCanvas($x, $y));
     }
 
     /**
-    * @dataProvider parameterProvider
+    * @dataProvider validateParamProvider
     */
     public function testValidateParams($x, $y, $expected)
     {
     	$this->assertEquals($expected, $this->img->validateParams($x, $y));
     }
 
-    public function parameterProvider()
+    
+    public function validateParamProvider()
     {
     	return array(
     		array(1, 1, true),
@@ -39,4 +39,25 @@ class ImageTest extends \PHPUnit_Framework_TestCase
     	);
     }
 
+    /**
+    * @dataProvider canvasProvider
+    */
+    public function testCreateCanvas($x, $y, $expected)
+    {
+    	$this->img->createCanvas($x, $y);
+    	$this->assertEquals($this->img->getImg(), $expected);
+    }
+
+    public function canvasProvider()
+    {
+    	return array(
+    		array(1, 1, array(1 => array(1 => 'O'))),
+    		array(2, 1, array(1 => array(1 => 'O'), 2 => array(1 => 'O'))),
+    		array(1, 251, false),
+    		
+    	);
+    }
+
+
+    
 }
