@@ -15,6 +15,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
     public function testNewImage()
     {
     	$this->assertTrue($this->img instanceOf Image);
+    	$this->assertEquals(-1, $this->img->createCanvas($x, $y));
     }
 
     /**
